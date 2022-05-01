@@ -10,6 +10,7 @@ const env = process.env.NODE_ENV || 'development';
 const config = allConfig[env];
 const db = {};
 
+// create a new instance of sequelize from the config files
 let sequelize = new Sequelize(
   config.database,
   config.username,
@@ -18,7 +19,7 @@ let sequelize = new Sequelize(
 );
 
 // add your model definitions to db here
-
+// add model classes to the db to be used as instances
 db.Attraction = initAttractionModel(sequelize, Sequelize.DataTypes);
 db.Trip = initTripModel(sequelize, Sequelize.DataTypes);
 

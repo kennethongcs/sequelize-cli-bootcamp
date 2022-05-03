@@ -3,6 +3,7 @@ import allConfig from '../config/config.js';
 
 import initTripModel from './trip.mjs';
 import initAttractionModel from './attraction.mjs';
+import initCategoryModel from './category.mjs';
 
 // import model functions here
 
@@ -22,9 +23,13 @@ let sequelize = new Sequelize(
 // add model classes to the db to be used as instances
 db.Attraction = initAttractionModel(sequelize, Sequelize.DataTypes);
 db.Trip = initTripModel(sequelize, Sequelize.DataTypes);
+db.Category = initCategoryModel(sequelize, Sequelize.DataTypes);
 
 db.Attraction.belongsTo(db.Trip);
 db.Trip.hasMany(db.Attraction);
+
+db.Attraction.belongsTo(db.Category);
+db.Category.hasMany(db.Attraction);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

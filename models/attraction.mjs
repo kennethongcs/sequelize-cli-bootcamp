@@ -18,6 +18,13 @@ export default function initAttractionModel(sequelize, DataTypes) {
           key: 'id',
         },
       },
+      category_id: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'categories',
+          key: 'id',
+        },
+      },
     },
     {
       underscored: true,

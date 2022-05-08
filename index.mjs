@@ -117,22 +117,41 @@ if (process.argv[2] === 'category-trip') {
 
 // get attractions for all trips that belong to specific category
 if (process.argv[2] === 'category-attractions') {
-  db.Category.findOne({
-    where: {
-      name: process.argv[3],
-    },
-  }).then((returnedCategory) => {
-    return db.Attraction.findAll({
+  const getCategoryAttractions = async () => {
+    const category = await db.Category.findOne({
       where: {
-        category_id: returnedCategory.id,
+        name: process.argv[3],
       },
-    }).then((returnedAttractions) => {
-      let output = `Attractions from <Category: ${process.argv[3]}>:`;
-      const attractionList = returnedAttractions.map((attractions, index) => {
-        const attraction = `\n${index + 1}: ${attractions.name}`;
-        output += attraction;
-      });
-      console.log(output);
     });
-  });
+    const attraction = await db.Attraction.findAll({
+      where: {
+        category_id: category.id,
+      },
+    });
+    let output = `Attractions from <Category: ${process.argv[3]}>:`;
+    const attractionList = attraction.map((attractions, index) => {
+      const finalAttraction = `\n${index + 1}: ${attractions.name}`;
+      output += finalAttraction;
+    });
+    console.log(output);
+  };
+  getCategoryAttractions();
+  // db.Category.findOne({
+  //   where: {
+  //     name: process.argv[3],
+  //   },
+  // }).then((returnedCategory) => {
+  //   return db.Attraction.findAll({
+  //     where: {
+  //       category_id: returnedCategory.id,
+  //     },
+  //   }).then((returnedAttractions) => {
+  //     let output = `Attractions from <Category: ${process.argv[3]}>:`;
+  //     const attractionList = returnedAttractions.map((attractions, index) => {
+  //       const attraction = `\n${index + 1}: ${attractions.name}`;
+  //       output += attraction;
+  //     });
+  //     console.log(output);
+  //   });
+  // });
 }

@@ -115,6 +115,7 @@ if (process.argv[2] === 'category-trip') {
   });
 }
 
+/*
 // get attractions for all trips that belong to specific category
 if (process.argv[2] === 'category-attractions') {
   const getCategoryAttractions = async () => {
@@ -154,4 +155,33 @@ if (process.argv[2] === 'category-attractions') {
   //     console.log(output);
   //   });
   // });
+}
+*/
+
+// with async
+// get attractions for all trips that belong to specific category
+if (process.argv[2] === 'category-attractions') {
+  const getCategoryAttractions = async () => {
+    try {
+      const category = await db.Category.findOne({
+        where: {
+          name: process.argv[3],
+        },
+      });
+      const attractions = await db.Attraction.findAll({
+        where: {
+          category_id: category.id,
+        },
+      });
+      let output = `Attractions from <Category: ${process.argv[3]}>:`;
+      const attractionList = attractions.map((x, index) => {
+        const attraction = `\n${index + 1}: ${x.name}`;
+        output += attraction;
+      });
+      console.log(output);
+    } catch {
+      throw new Error('No attractions');
+    }
+  };
+  getCategoryAttractions();
 }

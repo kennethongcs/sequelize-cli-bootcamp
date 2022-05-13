@@ -1,5 +1,5 @@
 export default function initItemModel(sequelize, DataTypes) {
-  sequelize.define(
+  return sequelize.define(
     'item',
     {
       id: {

@@ -6,9 +6,14 @@ const getCategoryItems = async () => {
       where: {
         name: process.argv[2],
       },
+      // different method to inner join
+      include: {
+        model: db.Item,
+      },
     });
-    const categoryItems = await category.getItems();
-    console.log(categoryItems.map((item) => item.name));
+    // const categoryItems = await category.getItems();
+    // console.log(categoryItems.map((item) => item.name));
+    console.log(category.items.map((item) => item.name));
   } catch (err) {
     console.log('error: ', err);
   }

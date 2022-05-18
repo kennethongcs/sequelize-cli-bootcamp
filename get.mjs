@@ -9,8 +9,8 @@ const getModels = async () => {
     const cart = carts[0];
 
     const items = await cart.getItems();
-    // console.log('items in first cart');
-    // console.log(items);
+    console.log('items in first cart');
+    console.log(items);
 
     const cartItems = await cart.getCart_items();
     // console.log('cart items');
